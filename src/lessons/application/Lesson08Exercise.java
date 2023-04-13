@@ -23,14 +23,16 @@ public class Lesson08Exercise {
                 line = br.readLine();
             }
 
-            List<Double> testList = products.stream().map(Product::getPrice).toList(); // Lista apenas com o preço dos produtos
-            Double precoMedio = testList.stream().reduce(0.0, Double::sum) / testList.size(); // Soma os valores da lista e divide pelo tamanho
+            Double precoMedio = products.stream().map(Product::getPrice).reduce(0.0, Double::sum) / products.size(); // Soma os valores da lista e divide pelo tamanho
+
+            System.out.printf("Média dos produtos: $%.2f\n", precoMedio);
+
+            // Pipeline
             List<String> nomeDecrescente = products.stream() // Transforma em stream
                     .filter(x -> x.getPrice() < precoMedio) // Filtra os produtos com preço menor que a média
                     .map(Product::getName) // Acrescenta a lista o nome desses produtos
                     .sorted(Comparator.reverseOrder()).toList(); // Coloca em ordem decrescente e transforma de volta em lista
 
-            System.out.printf("Média dos produtos: $%.2f\n", precoMedio);
             System.out.println("Produtos com preços abaixo da média: ");
             nomeDecrescente.forEach(System.out::println);
 
